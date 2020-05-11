@@ -11,11 +11,9 @@ May 2020
 
 ## References
 
-### Domain Background
+* [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/)
+* [Systems Identification](https://www.mathworks.com/help/ident/gs/about-system-identification.html)
 
-In the biosciences, [dynamic modeling](https://en.wikipedia.org/wiki/Dynamical_system) plays a very important role for understanding and predicting the behaviour of biochemical systems, with wide-ranging applications from bioengineering to precision medicine. For instance, understanding how a certain inhibitor affects the enzyme function is useful not just for improving titer, yield, and rate (TRY) in bioengineering, but also for designing personalized drugs. Traditionally, dynamic modeling of biochemical systems is done by painstakingly constructing a set of equations that characterises the system dynamics, which takes a long time to develop and does not scale with increasing amounts of data. To overcome these challenges, I will implement a data-driven method based on machine learning that allows faster development of predictive dynamics and improves in performance when more data are available. I am fascinated by the opportunities created by the abundance of data and computing power in bioinformatics and would love to contribute to shaping the future of bioscience with machine learning, one step at a time.
-
-Reference: [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/)
 
 ### Problem Statement
 
@@ -23,7 +21,7 @@ Following [MultiStep Neural Network](https://maziarraissi.github.io/research/7_m
 
 ### Datasets and Inputs
 
-To generate time-series data for training and testing the model, I will simulate time-series concentrations from the [glycolytic oscillations in yeast cells](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1300712/). This can be done by solving the system of equations using a numerical integrator from `scipy`. I plan to use three set of parameter values for the ordinary differential equations of the dynamical system that will result in different qualitative behaviour of the system dynamics. I expect the multistep neural network to be robust enough to handle these three regimes.
+I plan to use three set of parameter values for the ordinary differential equations of the dynamical system that will result in different qualitative behaviour of the system dynamics. I expect the multistep neural network to be robust enough to handle these three regimes.
 
 The inputs are the simulated time-series data for yeast glycolysis. There is no further preprocessing because we already generate the data in regular time intervals.
 
@@ -37,9 +35,6 @@ The classical benchmark model is the [implicit SINDy method](https://ieeexplore.
 
 The goal of this project is to demonstrate that Multistep Neural Network can provide better predictive power than implicit SINDy, given more data.
 
-### Evaluation Metrics
-
-Because we are dealing with continuous values, the natural metric to use is the root mean squared error (RMSE), which is the L2 norm of the discrepancy between predicted and true dynamics.
 
 ### Project Design
 
