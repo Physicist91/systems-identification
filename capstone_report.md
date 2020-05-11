@@ -50,13 +50,37 @@ With the default parameter values, the system exhibits an oscillatory behaviour:
 
 ![Figure 1](default-bier.png)
 
-The visualization should adequately support the data being used. Discuss why this visualization was chosen and how it is relevant. Questions to ask yourself when writing this section:
-- _Have you visualized a relevant characteristic or feature about the dataset or input data?_
-- _Is the visualization thoroughly analyzed and discussed?_
-- _If a plot is provided, are the axes, title, and datum clearly defined?_
+Reducing the glucose transport rate to 0.1, however, results in a very different qualitative behaviour where there is a short burst of ATP followed by linear increase in Glucose:
+
+![Figure 2](2-bier.png)
+
+The bistability in the system is evident from the presence of a stable limit cycle in yet another parameter regime:
+
+![Figure 3](3-bier.png)
+
+To find the point of bifurcation where the state transition occurs, I plot the maximum and minimum values of [G] and [ATP] after a sufficiently long period:
+
+![Figure 4](bifurcation-bier.png)
+
+It can be seen from the bifurcation plot that the system changes its qualitative behaviour (from oscillating to a stable fixed point) when the glucose transport rate (Vin) is around 1.3
+
+These visualizations are important because the implementation of the machine learning approach must be able to recover the above dynamic behaviour. Apart from discovering dynamics, it should also correctly identify bifurcation.
+
+Plot Glossary:
+- [ATP] = Time-series concentration of Adenosine Triphosphate
+- [G] = Time-series concentration of Glucose
+- Vin = Initial Glucose transport rate
+- k1, kp, km = Parameters of the enzyme kinetics
 
 ### Algorithms and Techniques
-In this section, you will need to discuss the algorithms and techniques you intend to use for solving the problem. You should justify the use of each one based on the characteristics of the problem and the problem domain. Questions to ask yourself when writing this section:
+
+The objective is to find the function `f` that best represents the dynamics in the data, which is the right hand side of the ordinary differential equations (ODE) in dynamic modeling. This is done by formulating a supervised learning problem embedded in the numerical framework of [linear multistep methods (LMM)](https://en.wikipedia.org/wiki/Linear_multistep_method). Formally, we proceed as follows.
+
+![Figure 5](ml-dynamicalsystems.png)
+
+I build the multistep neural network in TensorFlow 2.0, embedded in numerical framework of LMM from [SymPy](https://www.sympy.org/en/index.html).
+
+Questions to ask yourself when writing this section:
 - _Are the algorithms you will use, including any default variables/parameters in the project clearly defined?_
 - _Are the techniques to be used thoroughly discussed and justified?_
 - _Is it made clear how the input data or datasets will be handled by the algorithms and techniques chosen?_
