@@ -11,13 +11,19 @@ May 2020
 
 ## References
 
+The primary materials I consult are
 * [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/)
 * [Systems Identification](https://www.mathworks.com/help/ident/gs/about-system-identification.html)
 
+The motivation of this project is derived from
+* Villaverde, A. F. & Banga, J. R. Reverse engineering and identification in systems biology: strategies, perspectives and challenges. J. R. Soc. Interface 11, 20130505 (2013).
+* [Universal Differential Equations for Scientific Machine Learning](https://arxiv.org/abs/2001.04385)
 
-### Problem Statement
+## Brief Overview
 
-Following [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/), the objective is to find the function f that best represents the dynamics in the data. This is done by formulating a supervised learning problem embedded in the numerical framework of [linear multistep methods](https://en.wikipedia.org/wiki/Linear_multistep_method). I will build the multistep neural network with TensorFlow 2.0. RMSE will be used as the evaluation metric.
+This project is a cross-over between dynamical system and machine learning, with an application to the biosciences. It is very close to the state-of-the-art research currently being conducted in the field. Traditionally, such a method for discovering dynamics was known as *system identification* before machine learning libraries were made open-source commodity. However, systems identification is recognized as a hard problem in the physical sciences. Here, I want to show that a machine learning approach can help accelerate and transform how dynamic modeling is done in the hard sciences.
+
+the objective is to find the function f that best represents the dynamics in the data. This is done by formulating a supervised learning problem embedded in the numerical framework of [linear multistep methods](https://en.wikipedia.org/wiki/Linear_multistep_method). I will build the multistep neural network with TensorFlow 2.0. RMSE will be used as the evaluation metric.
 
 ### Datasets and Inputs
 
