@@ -22,6 +22,12 @@ The motivation of this project is derived from
 * Villaverde, A. F. & Banga, J. R. Reverse engineering and identification in systems biology: strategies, perspectives and challenges. J. R. Soc. Interface 11, 20130505 (2013).
 * [Universal Differential Equations for Scientific Machine Learning](https://arxiv.org/abs/2001.04385)
 
-### How It Works
+### About the Project
 
-This project is a cross-over between dynamical system and machine learning, with an application to the biosciences. It is very close to the state-of-the-art research currently being conducted in the field. Traditionally, such a method for discovering dynamics was known as *system identification* before machine learning libraries were made open-source commodity. However, systems identification is recognized as a hard problem in the physical sciences. Here, I want to show that a machine learning approach can help accelerate and transform how dynamic modeling is done in the hard sciences.
+Keywords:
+- Dynamical Systems
+- Systems Biology
+- Machine Learning
+- Neural Network
+
+This project is very close to the state-of-the-art research currently being conducted in the field. Traditionally, the method of discovering dynamics from data was known as *system identification* before machine learning libraries were made open-source commodity. However, systems identification is recognized as a hard problem in the physical sciences. Here, I want to show that a machine learning approach can help accelerate and transform how dynamic modeling is done in the sciences.

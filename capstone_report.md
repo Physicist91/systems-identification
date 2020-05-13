@@ -139,12 +139,16 @@ The model is also successful in discovering the [Hopf bifurcation](https://en.wi
 
 ![3D Plot 2](img/bifurcation-hopf.png)
 
-Note the dramatic change in the behaviour as the parameter mu transitions from negative to positive values, signaling a bifurcation (stable fixed point to stable limit cycle). These preliminary results provide a level of confidence that the model is working properly. However, I still have to find the right step size to use for the 2-D Glycolytic Oscillator.
+Note the dramatic change in the behaviour as the parameter mu transitions from negative to positive values, signaling a bifurcation (stable fixed point to stable limit cycle). These preliminary results provide a level of confidence that the model is working properly. However, I still have to find the right step size to use for the 2-D Glycolytic Oscillator. In order to find the right step size, I compare the MSE of the model as the step size is varied:
 
-Furthermore, I experiment with different number of epochs to find out how many training iterations are sufficient for the multistep neural network to adequately learn the dynamics. As seen in `Refinement - Step Size.ipynb`:
+![Plot 4](img/perturbation-h.png)
+
+We can see that smaller step size gives better performance, which is consistent with earlier findings in [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/) for other systems. Furthermore, I experiment with different number of epochs to find out how many training iterations are sufficient for the multistep neural network to adequately learn the dynamics. As seen in `Refinement - Step Size.ipynb`:
 - at 5 epochs, the model only learns the early phase of the dynamics.
 - at 100 epochs, the model starts to learn the oscillatory behaviour and captures the steady state at long time period
 - at 1000 epochs, the model captures the dynamics of the system, including the characteristic peaks and steady state.
+
+Based on these findings, I choose to train the model for 10000 epochs so that it can adequately learn the dynamics in the system.
 
 ## IV. Results
 
@@ -162,14 +166,11 @@ The final model is able to predict the dynamics of the test data fairly well in 
 
 ![Plot 3](img/phase-glycolytic.png)
 
-In order to find the right step size, I compare the MSE of the model as the step size is varied:
+Finally, the model is evaluated on test data with initial conditions that were not seen before by the model:
 
-![Plot 4](img/perturbation-h.png)
+![Plot 5](img/test-21.png)
 
-We can see that smaller step size gives better performance, which is consistent with earlier findings in [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/) for other systems. Furthermore, the model is also evaluated on test data with initial conditions that were not seen before by the model:
-
-- _Is the model robust enough for the problem? Do small perturbations (changes) in training data or the input space greatly affect the results?_
-- _Can results found from the model be trusted?_
+This suggests that the model is robust enough to handle unseen data and able to predict dynamics of the system given arbitrary initial conditions. The code to generate these results are available in the notebook `Results - Evaluation and Validation.ipynb`.
 
 ### Justification
 
@@ -214,4 +215,3 @@ In this section, you will need to provide discussion as to how one aspect of the
 - Would the intended audience of your project be able to understand your analysis, methods, and results?
 - Have you properly proof-read your project report to assure there are minimal grammatical and spelling mistakes?
 - Is the code that implements your solution easily readable and properly commented?
-- Does the code execute without error and produce results similar to those reported?
