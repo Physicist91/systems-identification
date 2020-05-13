@@ -129,15 +129,19 @@ The implementation of the multistep neural network takes the step size, number o
 
 To test the correctness of my implementation, I apply the method to the example systems discussed in [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/). Specifically, the model is able to:
 - reconstruct the chaotic dynamics of the Lorenz system (see `Refinement - Lorenz.ipynb`)
-- rediscover Hopf bifurcation
+- rediscover Hopf bifurcation (see `Refinement - Hopf Bifurcation.ipynb`)
 
-Due to the chaotic nature of the Lorenz system, small differences between the exact and learned model grow exponentially with time. However, the attractor form (butterfly effect) is still well captured:
+Due to the chaotic nature of the Lorenz system, small differences between the exact and learned model grow exponentially with time. However, the attractor form (butterfly effect) in 3-D Euclidean space is still well captured:
 
+![3D Plot 1](img/lorenz.png)
 
-These preliminary results provide a level of confidence that the model is working properly.
+The model is also successful in discovering the [Hopf bifurcation](https://en.wikipedia.org/wiki/Bifurcation_theory) of the Hopf normal form:
 
-For example, adjusting parameters for certain models to acquire improved solutions would fall under the refinement category. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
-- _Is the process of improvement clearly documented, such as what techniques were used?_
+![3D Plot 2](img/bifurcation-hopf.png)
+
+Note the dramatic change in the behaviour as the parameter mu transitions from negative to positive values, signaling a bifurcation (stable fixed point to stable limit cycle). These preliminary results provide a level of confidence that the model is working properly. However, I still have to find the right step size to use for the 2-D Glycolytic Oscillator.
+
+In order to find the right step size, I compare the MSE of the model as the step size is varied. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
 - _Are intermediate and final solutions clearly reported as the process is improved?_
 
 
