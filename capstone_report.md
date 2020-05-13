@@ -126,8 +126,17 @@ The implementation of the multistep neural network takes the step size, number o
 **Remark**: in the future, the number of hidden layers can be tuned to get a better performance, but for now I use a single layer to get a working implementation.
 
 ### Refinement
-In this section, you will need to discuss the process of improvement you made upon the algorithms and techniques you used in your implementation. For example, adjusting parameters for certain models to acquire improved solutions would fall under the refinement category. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
-- _Has an initial solution been found and clearly reported?_
+
+To test the correctness of my implementation, I apply the method to the example systems discussed in [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/). Specifically, the model is able to:
+- reconstruct the chaotic dynamics of the Lorenz system (see `Refinement - Lorenz.ipynb`)
+- rediscover Hopf bifurcation
+
+Due to the chaotic nature of the Lorenz system, small differences between the exact and learned model grow exponentially with time. However, the attractor form (butterfly effect) is still well captured:
+
+
+These preliminary results provide a level of confidence that the model is working properly.
+
+For example, adjusting parameters for certain models to acquire improved solutions would fall under the refinement category. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
 - _Is the process of improvement clearly documented, such as what techniques were used?_
 - _Are intermediate and final solutions clearly reported as the process is improved?_
 
@@ -148,7 +157,7 @@ The final model is able to predict the dynamics of the test data fairly well in 
 
 ![Plot 3](img/phase-glycolytic.png)
 
- In addition, some type of analysis should be used to validate the robustness of this model and its solution, such as manipulating the input data or environment to see how the model’s solution is affected (this is called sensitivity analysis).
+In addition, some type of analysis should be used to validate the robustness of this model and its solution, such as manipulating the input data or environment to see how the model’s solution is affected (this is called sensitivity analysis).
 - _Has the final model been tested with various inputs to evaluate whether the model generalizes well to unseen data?_
 - _Is the model robust enough for the problem? Do small perturbations (changes) in training data or the input space greatly affect the results?_
 - _Can results found from the model be trusted?_
@@ -177,7 +186,10 @@ In this section, you will need to provide some form of visualization that emphas
 - _If a plot is provided, are the axes, title, and datum clearly defined?_
 
 ### Reflection
-In this section, you will summarize the entire end-to-end problem solution and discuss one or two particular aspects of the project you found interesting or difficult. You are expected to reflect on the project as a whole to show that you have a firm understanding of the entire process employed in your work. Questions to ask yourself when writing this section:
+
+The MultiStep Neural Network takes in the time-series data as input and learns the function/derivative that describes the dynamics. Before it can be used to make predictions, the function must be integrated (using `scipy`). The benefit of this method is that it allows a full characterization of how the system will develop in time given only some initial values, which has plenty of use cases in bioengineering.
+
+You are expected to reflect on the project as a whole to show that you have a firm understanding of the entire process employed in your work. Questions to ask yourself when writing this section:
 - _Have you thoroughly summarized the entire process you used for this project?_
 - _Were there any interesting aspects of the project?_
 - _Were there any difficult aspects of the project?_
@@ -193,7 +205,6 @@ In this section, you will need to provide discussion as to how one aspect of the
 
 **Before submitting, ask yourself. . .**
 
-- Is each section (particularly **Analysis** and **Methodology**) written in a clear, concise and specific fashion? Are there any ambiguous terms or phrases that need clarification?
 - Would the intended audience of your project be able to understand your analysis, methods, and results?
 - Have you properly proof-read your project report to assure there are minimal grammatical and spelling mistakes?
 - Are all the resources used for this project correctly cited and referenced?

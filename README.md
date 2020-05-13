@@ -26,9 +26,6 @@ The motivation of this project is derived from
 
 This project is a cross-over between dynamical system and machine learning, with an application to the biosciences. It is very close to the state-of-the-art research currently being conducted in the field. Traditionally, such a method for discovering dynamics was known as *system identification* before machine learning libraries were made open-source commodity. However, systems identification is recognized as a hard problem in the physical sciences. Here, I want to show that a machine learning approach can help accelerate and transform how dynamic modeling is done in the hard sciences.
 
-### Solution Statement
-
-The MultiStep Neural Network will take in the time-series data as input and learns the function/derivative that describes the dynamics. Before it can be used to make predictions, the function must be integrated (using `scipy`). The benefit of this method is that it allows a full characterization of how the system will develop in time given only some initial values, which has plenty of use cases in bioengineering.
 
 
 
