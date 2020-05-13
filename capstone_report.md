@@ -141,9 +141,10 @@ The model is also successful in discovering the [Hopf bifurcation](https://en.wi
 
 Note the dramatic change in the behaviour as the parameter mu transitions from negative to positive values, signaling a bifurcation (stable fixed point to stable limit cycle). These preliminary results provide a level of confidence that the model is working properly. However, I still have to find the right step size to use for the 2-D Glycolytic Oscillator.
 
-In order to find the right step size, I compare the MSE of the model as the step size is varied. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:
-- _Are intermediate and final solutions clearly reported as the process is improved?_
-
+Furthermore, I experiment with different number of epochs to find out how many training iterations are sufficient for the multistep neural network to adequately learn the dynamics. As seen in `Refinement - Step Size.ipynb`:
+- at 5 epochs, the model only learns the early phase of the dynamics.
+- at 100 epochs, the model starts to learn the oscillatory behaviour and captures the steady state at long time period
+- at 1000 epochs, the model captures the dynamics of the system, including the characteristic peaks and steady state.
 
 ## IV. Results
 
@@ -161,27 +162,28 @@ The final model is able to predict the dynamics of the test data fairly well in 
 
 ![Plot 3](img/phase-glycolytic.png)
 
-In addition, some type of analysis should be used to validate the robustness of this model and its solution, such as manipulating the input data or environment to see how the model’s solution is affected (this is called sensitivity analysis).
-- _Has the final model been tested with various inputs to evaluate whether the model generalizes well to unseen data?_
+In order to find the right step size, I compare the MSE of the model as the step size is varied:
+
+![Plot 4](img/perturbation-h.png)
+
+We can see that smaller step size gives better performance, which is consistent with earlier findings in [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/) for other systems. Furthermore, the model is also evaluated on test data with initial conditions that were not seen before by the model:
+
 - _Is the model robust enough for the problem? Do small perturbations (changes) in training data or the input space greatly affect the results?_
 - _Can results found from the model be trusted?_
 
 ### Justification
 
-In comparison to the results presented in the previous section, the MSE for the 2-D Harmonic Oscillator, as reported in [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/), show significantly worse performance when using single step for AB and BDF:
+The results from the previous section suggest that the multistep method provide consistently good performance (within the same order of magnitude) for all three schemes of LMM when applied to the 2-D Yeast Glycolytic Oscillator problem. In comparison, the MSE for the 2-D Harmonic Oscillator, as reported in [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/), show significantly worse performance when using single step for AB and BDF:
 
 ![Plot 3](img/scan_1_harmonic.png)
 
-In [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/), it was hypothesized that the superior performance of the Adams Moulton scheme may be due to the arrangement of the terms in the trapezoidal rule. However, we see that this is not the case here for the 2-D Yeast Glycolytic Oscillator. This exciting result should motivate further study in this area to investigate the mathematical properties of the method (in a [recent paper](https://arxiv.org/abs/1912.12728), it has been shown that the Multistep Neural Network is **not stable** for M > 1 in the Adams-Moulton scheme).
+In [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/), it was hypothesized that the superior performance of the Adams Moulton scheme may be due to the arrangement of the terms in the trapezoidal rule. However, we see that this is not the case here for the 2-D Yeast Glycolytic Oscillator. This exciting result should motivate further study in this area to investigate the mathematical properties of the method (in a [recent paper](https://arxiv.org/abs/1912.12728), it has been shown that the Multistep Neural Network is **not stable** for M > 1 in the Adams-Moulton scheme). In particular, our findings are consistent with the theoretical properties regarding the stability of AM recently published in [the paper](https://arxiv.org/abs/1912.12728), indicated by the doubling in the error for M = 4 in the AM scheme.
 
-In this section, your model’s final solution and its results should be compared to the benchmark you established earlier in the project using some type of statistical analysis. You should also justify whether these results and the solution are significant enough to have solved the problem posed in the project. Questions to ask yourself when writing this section:
-- _Are the final results found stronger than the benchmark result reported earlier?_
-- _Have you thoroughly analyzed and discussed the final solution?_
-- _Is the final solution significant enough to have solved the problem?_
-
+In addition to having consistent performance across all family of LMM schemes for predicting the dynamics of the 2-D Yeast Glycolytic Oscillator, the method shows robust ability to identify bifurcations and chaotic attractors (section 3 -- refinement). However, some limitations exist for the practical deployment of the method:
+* Multistep neural network expects time-series data at regular intervals, but most data in biological systems are sampled at irregular time intervals. A workaround is to preprocess the data such that the resulting time-series is uniformly spaced.
+* The multistep neural network requires sufficiently dense time points (in our simulated data, we use 2500 time points). However, several real biological datasets have very few time points. A workaround is to use data augmentation strategies to obtain denser training data.
 
 ## V. Conclusion
-_(approx. 1-2 pages)_
 
 ### Free-Form Visualization
 In this section, you will need to provide some form of visualization that emphasizes an important quality about the project. It is much more free-form, but should reasonably support a significant result or characteristic about the problem that you want to discuss. Questions to ask yourself when writing this section:
@@ -191,7 +193,7 @@ In this section, you will need to provide some form of visualization that emphas
 
 ### Reflection
 
-The MultiStep Neural Network takes in the time-series data as input and learns the function/derivative that describes the dynamics. Before it can be used to make predictions, the function must be integrated (using `scipy`). The benefit of this method is that it allows a full characterization of how the system will develop in time given only some initial values, which has plenty of use cases in bioengineering.
+The MultiStep Neural Network takes in the time-series data as input and learns the function/derivative that describes the dynamics. Before it can be used to make predictions, the function must be integrated (using `scipy`). The benefit of this method is that it allows a full characterization of how the system will develop in time given only some initial values, which has plenty of use cases in bioengineering (and precision medicine).
 
 You are expected to reflect on the project as a whole to show that you have a firm understanding of the entire process employed in your work. Questions to ask yourself when writing this section:
 - _Have you thoroughly summarized the entire process you used for this project?_
@@ -211,6 +213,5 @@ In this section, you will need to provide discussion as to how one aspect of the
 
 - Would the intended audience of your project be able to understand your analysis, methods, and results?
 - Have you properly proof-read your project report to assure there are minimal grammatical and spelling mistakes?
-- Are all the resources used for this project correctly cited and referenced?
 - Is the code that implements your solution easily readable and properly commented?
 - Does the code execute without error and produce results similar to those reported?
