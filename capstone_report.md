@@ -187,31 +187,34 @@ In addition to having consistent performance across all family of LMM schemes fo
 ## V. Conclusion
 
 ### Free-Form Visualization
-In this section, you will need to provide some form of visualization that emphasizes an important quality about the project. It is much more free-form, but should reasonably support a significant result or characteristic about the problem that you want to discuss. Questions to ask yourself when writing this section:
-- _Have you visualized a relevant or important quality about the problem, dataset, input data, or results?_
-- _Is the visualization thoroughly analyzed and discussed?_
-- _If a plot is provided, are the axes, title, and datum clearly defined?_
+
+A major test for the robustness of multistep neural network for the 2-D Yeast Glycolysis problem is whether it can discover bifurcation (a.k.a. state transition), where the system dramatically changes its qualitative behaviour from steady-state behaviour:
+
+![free1](img/stable1.png)
+
+to sustained oscillation:
+
+![free2](img/stable2.png)
+
+Here, the x-axis is the time-course concentration of ATP while the y-axis is the time-course concentration of Glucose. As seen in the exploratory analysis (see `Analysis - Data Exploration and Visualization.ipynb`), one important parameter of the Bier model that influences the state transition is Vin (the glucose transport rate). Rearranging the system of equations to introduce Vin as an extra dimension (see `Results - Evaluation and Validation.ipynb`), the multistep neural network can be trained by treating the extra dimension (Vin) as set of trajectories. Visualing the inference results in the phase space, we can clearly see the bifurcation:
+
+![ff](img/freeform.png)
+
+Note the transition from oscillatory to stable steady state system when Vin crosses the value of 1.3. Here, the inference is performed on initial conditions not seen before during training, demonstrating the robustness of the model.
 
 ### Reflection
 
 The MultiStep Neural Network takes in the time-series data as input and learns the function/derivative that describes the dynamics. Before it can be used to make predictions, the function must be integrated (using `scipy`). The benefit of this method is that it allows a full characterization of how the system will develop in time given only some initial values, which has plenty of use cases in bioengineering (and precision medicine).
 
-You are expected to reflect on the project as a whole to show that you have a firm understanding of the entire process employed in your work. Questions to ask yourself when writing this section:
-- _Have you thoroughly summarized the entire process you used for this project?_
-- _Were there any interesting aspects of the project?_
-- _Were there any difficult aspects of the project?_
-- _Does the final model and solution fit your expectations for the problem, and should it be used in a general setting to solve these types of problems?_
+In this project, I blend Linear Multi-step method with Machine Learning and Neural Networks by formulating a supervised learning problem in the framework of the linear multistep method. By doing so:
+* we do not need artificial creation of derivatives (c.f [other works](https://www.nature.com/articles/s41540-018-0054-3) that compute derivatives explicitly to create training data)
+* we can look into the history of dynamics (via multi-step method) to predict ‘future’ dynamics
+* we are able to discover complex oscillations, bistabilities, and bifurcations purely from data.
 
 ### Improvement
-In this section, you will need to provide discussion as to how one aspect of the implementation you designed could be improved. As an example, consider ways your implementation can be made more general, and what would need to be modified. You do not need to make this improvement, but the potential solutions resulting from these changes are considered and compared/contrasted to your current solution. Questions to ask yourself when writing this section:
-- _Are there further improvements that could be made on the algorithms or techniques you used in this project?_
-- _Were there algorithms or techniques you researched that you did not know how to implement, but would consider using if you knew how?_
-- _If you used your final solution as the new benchmark, do you think an even better solution exists?_
+
+There are a few ways in which the model can be improved:
+1. Quantification of uncertainty -- one can further extend this method to predict not only the dynamics, but also the uncertainty/confidence interval associated with it. One possible idea is to use dropout to randomly turn off the neural network units; repeating this to get multiple predictions can give an uncertainty estimate.
+2. Model interpretation -- at the moment the multistep neural network is a blackbox model, but it can be improved by using explainable AI techniques to extract insights from what the model has learned; this can be very useful for scientists to better understand the dynamical system under study.
 
 -----------
-
-**Before submitting, ask yourself. . .**
-
-- Would the intended audience of your project be able to understand your analysis, methods, and results?
-- Have you properly proof-read your project report to assure there are minimal grammatical and spelling mistakes?
-- Is the code that implements your solution easily readable and properly commented?
