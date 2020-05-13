@@ -107,17 +107,23 @@ During inference, the data must be reshaped to get rid of the redundant dimensio
 
 ### Implementation
 
-I design a custom model using the TensorFlow subclassing API. The Neural Network model class is defined in `model.py`, while the function to generate output is defined in `predict.py`. All nontrivial methods and classes are documented with docstrings and comments.
+I design a custom model using the TensorFlow subclassing API. The Neural Network model class is defined in `model.py`, while the function to generate output is defined in `predict.py` and the training of the multistep neural network is implemented in the Python script `train.py`. All nontrivial methods and classes are documented with docstrings and comments.
 
-Training of the multistep neural network is implemented in the Python script `train.py`. This consists of the following steps:
-1. placeholder
-2. placeholder
+The overall implementation consists of the following steps:
+1. Generation of training and test data via `bier(...)` function
+2. Construction of the Multistep Neural Network via the `lmmNet(...)` class:
+  - load LMM coefficients from `nodepy` according to the family of LMM scheme
+  - arrange the coefficients to conform with equation (2) in [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/)
+  - define a feed-forward neural network with one hidden layer (tanh activation function)
+  - implement the linear difference operator for LMM in the `get_Y(...)` method (see, for example, Chapter 5 in [Numerical Analysis of ODE](https://www.mathsim.eu/~gkanscha/notes/ode.pdf))
+  - implement the function `get_F(...)` that gives the output of the neural network and is used by the linear difference operator
+  - define the `train(...)` function
+  - define the `predict(...)` function -- this function (in `model.py`) is then used by `predict.py` to make predictions by numerical integration
+3. Implementation of the metrics MSE (L2-error) using `numpy.linalg.norm` function in the `compute_MSE` function (accessible in the notebook `Benchmark - 2D Cubic Oscillator`).
 
-The MSE (L2-error) is implemented using `numpy.linalg.norm` function in the `compute_MSE` function (accessible in the notebook `Benchmark - 2D Cubic Oscillator`).
+The implementation of the multistep neural network takes the step size, number of steps, and the family scheme as input arguments. This is an important design choice because the best parameter set may be problem-dependent. The performance results for different settings of the hyperparameters are reported in section 4.
 
-It should be abundantly clear how the implementation was carried out, and discussion should be made regarding any complications that occurred during this process.
-- _Is it made clear how the algorithms and techniques were implemented with the given datasets or input data?_
-- _Were there any complications with the original metrics or techniques that required changing prior to acquiring a solution?_
+**Remark**: in the future, the number of hidden layers can be tuned to get a better performance, but for now I use a single layer to get a working implementation.
 
 ### Refinement
 In this section, you will need to discuss the process of improvement you made upon the algorithms and techniques you used in your implementation. For example, adjusting parameters for certain models to acquire improved solutions would fall under the refinement category. Your initial and final solutions should be reported, as well as any significant intermediate results as necessary. Questions to ask yourself when writing this section:

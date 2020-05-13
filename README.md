@@ -16,6 +16,7 @@ https://github.com/Physicist91/ml-engineering-capstone
 The primary materials I consult are
 * [MultiStep Neural Network](https://maziarraissi.github.io/research/7_multistep_neural_networks/)
 * [Systems Identification](https://www.mathworks.com/help/ident/gs/about-system-identification.html)
+* [Numerical Analysis of ODE](https://www.mathsim.eu/~gkanscha/notes/ode.pdf)
 
 The motivation of this project is derived from
 * Villaverde, A. F. & Banga, J. R. Reverse engineering and identification in systems biology: strategies, perspectives and challenges. J. R. Soc. Interface 11, 20130505 (2013).
@@ -24,10 +25,6 @@ The motivation of this project is derived from
 ### Brief Overview
 
 This project is a cross-over between dynamical system and machine learning, with an application to the biosciences. It is very close to the state-of-the-art research currently being conducted in the field. Traditionally, such a method for discovering dynamics was known as *system identification* before machine learning libraries were made open-source commodity. However, systems identification is recognized as a hard problem in the physical sciences. Here, I want to show that a machine learning approach can help accelerate and transform how dynamic modeling is done in the hard sciences.
-
-### Datasets and Inputs
-
-I plan to use three set of parameter values for the ordinary differential equations of the dynamical system that will result in different qualitative behaviour of the system dynamics. I expect the multistep neural network to be robust enough to handle these three regimes.
 
 ### Solution Statement
 
