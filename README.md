@@ -1,9 +1,9 @@
-# Machine Learning Engineer Nanodegree
+# Machine Learning Engineering Nanodegree
 ## Capstone Project
 Empirical Dynamic Modeling for [Systems Biology](https://en.wikipedia.org/wiki/Systems_biology) with Machine Learning  
 Kevin Siswandi  
 May 2020  
-https://github.com/Physicist91/ml-engineering-capstone
+https://github.com/Physicist91/systems-identification
 
 ### Software and Libraries
 
